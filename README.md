@@ -231,6 +231,8 @@ Response body example:
 }
 ```
 
+### Known issues
+The current appid does not allow retrieval of weather history from Agro Monitoring API (HTTP 401). It seems this feature is not available in the free version of the API.
 
 ### Possible improvements
 * improve error handling (eg.: add proper Error response objects and handle 3rd party service calls failures with these new error codes instead of failing with internal error)
