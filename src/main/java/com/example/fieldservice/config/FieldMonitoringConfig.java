@@ -6,7 +6,8 @@ import lombok.Data;
 
 @Data
 public class FieldMonitoringConfig {
-
+	
+	private Integer historyDays;
 	private String appId;
 	@NestedConfigurationProperty
 	private FieldMonitoringEndpointsConfig endpoints;

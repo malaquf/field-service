@@ -28,6 +28,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.fieldservice.config.ConfigProperties;
 import com.example.fieldservice.config.FieldMonitoringConfig;
+import com.example.fieldservice.config.FieldMonitoringEndpointsConfig;
 import com.example.fieldservice.config.MongoRepositoryConfiguration;
 import com.example.fieldservice.dto.WeatherHistoryDTO;
 import com.example.fieldservice.model.Field;
@@ -63,21 +64,23 @@ class FieldServiceApplicationTests {
 	private void mockThirdPartyServices() throws Exception {
 		File file = FileUtils.getResourceFile("responses/createPolygon.json");
 		String expectedCreatePolygonStringResponse = new String(Files.readAllBytes(file.toPath()));
-		this.mockServer.expect(requestTo("http://api.agromonitoring.com/agro/1.0/polygons?appid="+this.monitoringConfig.getAppId()))
+		FieldMonitoringEndpointsConfig endpoints = monitoringConfig.getEndpoints();
+
+		this.mockServer.expect(requestTo(endpoints.getCreatePolygon() + "?appid=" + this.monitoringConfig.getAppId()))
 		.andExpect(method(HttpMethod.POST))
 		.andRespond(withSuccess(expectedCreatePolygonStringResponse, MediaType.APPLICATION_JSON));
 		
-		this.mockServer.expect(requestTo("http://api.agromonitoring.com/agro/1.0/polygons/5f46aa28714b521409e0f8e9?appid="+this.monitoringConfig.getAppId()))
+		this.mockServer.expect(requestTo(endpoints.getUpdatePolygon() + "5f46aa28714b521409e0f8e9?appid=" + this.monitoringConfig.getAppId()))
 		.andExpect(method(HttpMethod.PUT))
 		.andRespond(withSuccess());
 
 		file = FileUtils.getResourceFile("responses/getWeatherHistory.json");
 		String expectedWeatherHistoryStringResponse = new String(Files.readAllBytes(file.toPath()));
-		this.mockServer.expect(requestTo("http://api.agromonitoring.com/agro/1.0/weather/history?appid=c73efcd83c3f3d3c70d7de1edcc8dce8&polyid=5f46aa28714b521409e0f8e9&start=18501&end=18494"))
+		this.mockServer.expect(requestTo(endpoints.getWeatherHistory() + "?appid=c73efcd83c3f3d3c70d7de1edcc8dce8&polyid=5f46aa28714b521409e0f8e9&start=18501&end=18494"))
 		.andExpect(method(HttpMethod.GET))
 		.andRespond(withSuccess(expectedWeatherHistoryStringResponse, MediaType.APPLICATION_JSON));
 		
-		this.mockServer.expect(requestTo("http://api.agromonitoring.com/agro/1.0/polygons/5f46aa28714b521409e0f8e9?appid="+this.monitoringConfig.getAppId()))
+		this.mockServer.expect(requestTo(endpoints.getDeletePolygon() + "5f46aa28714b521409e0f8e9?appid="+this.monitoringConfig.getAppId()))
 		.andExpect(method(HttpMethod.DELETE))
 		.andRespond(withSuccess());
 	}
@@ -128,7 +131,7 @@ class FieldServiceApplicationTests {
 		getFieldReponse = this.testRestTemplate.getForEntity(createURLWithPort(newFieldURI), Field.class);
 		assertEquals(HttpStatus.NOT_FOUND, getFieldReponse.getStatusCode());
 	}
-
+		
 	private String createURLWithPort(String uri) {
 		return "http://localhost:" + port + uri;
 	}

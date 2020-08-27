@@ -10,15 +10,16 @@ spring:
     mongodb:
       host: localhost
       port: 27017
-      
+
 fieldservice:
   monitoring:
+    historyDays : 7
     appId: c73efcd83c3f3d3c70d7de1edcc8dce8
     endpoints:
       createPolygon: http://api.agromonitoring.com/agro/1.0/polygons
       deletePolygon: http://api.agromonitoring.com/agro/1.0/polygons/
       updatePolygon: http://api.agromonitoring.com/agro/1.0/polygons/
-      weatherHistory: http://api.agromonitoring.com/agro/1.0/weather/history
+      weatherHistory: https://samples.openweathermap.org/agro/1.0/weather/history
 logging:
   level:
     com.example.fieldservice: DEBUG

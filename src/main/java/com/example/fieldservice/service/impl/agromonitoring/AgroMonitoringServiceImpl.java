@@ -31,6 +31,11 @@ public class AgroMonitoringServiceImpl implements MonitoringService {
 
 	private static final Logger log = LoggerFactory.getLogger(AgroMonitoringServiceImpl.class);
 	
+	/**
+	 * Default history length in days.
+	 */
+	private static final Integer DEFAULT_HISTORY_DAYS = 7;
+	
 	@Autowired
 	private ConfigProperties configProperties;
 	
@@ -79,8 +84,9 @@ public class AgroMonitoringServiceImpl implements MonitoringService {
 		FieldMonitoringEndpointsConfig endpoints = monitoringConfig.getEndpoints();
 		String endpoint = endpoints.getWeatherHistory();
 		
+		Integer historyDays = monitoringConfig.getHistoryDays() == null ? DEFAULT_HISTORY_DAYS : monitoringConfig.getHistoryDays();
 		long start = LocalDate.now().toEpochDay();
-		long end = LocalDate.now().minusDays(7).toEpochDay();
+		long end = LocalDate.now().minusDays(historyDays).toEpochDay();
 		
 		URI uri = UriComponentsBuilder.
 				fromUriString(endpoint)
