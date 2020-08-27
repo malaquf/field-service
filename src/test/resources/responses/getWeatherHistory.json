@@ -1,0 +1,52 @@
+[
+   {
+      "dt":1485705600,
+      "weather":[
+         {
+            "id":802,
+            "main":"Clouds",
+            "description":"scattered clouds",
+            "icon":"03d"
+         }
+      ],
+      "main":{
+         "temp":288.15,
+         "pressure":1018,
+         "humidity":47,
+         "temp_min":288.15,
+         "temp_max":288.15
+      },
+      "wind":{
+         "speed":2,
+         "deg":150
+      },
+      "clouds":{
+         "all":36
+      }
+   },
+   {
+      "dt":1485709200,
+      "weather":[
+         {
+            "id":804,
+            "main":"Clouds",
+            "description":"overcast clouds",
+            "icon":"04d"
+         }
+      ],
+      "main":{
+         "temp":287.15,
+         "pressure":1018,
+         "humidity":47,
+         "temp_min":287.15,
+         "temp_max":287.15
+      },
+      "wind":{
+         "speed":4,
+         "deg":160
+      },
+      "clouds":{
+         "all":92
+      }
+   }
+]

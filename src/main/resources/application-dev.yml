@@ -1,0 +1,8 @@
+spring:
+  data:
+    mongodb:
+      host: db
+      port: 27017
+      username: malaquf
+      password: myPsw
+      database: app
